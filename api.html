@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch and Download CSV</title>
+</head>
+<body>
+    <button id="fetch-button">Fetch and Download CSV</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.getElementById("fetch-button").addEventListener("click", function() {
+            $.ajax({
+                type: "GET",
+                url: "https://app.ticketmaster.com/discovery/v2/events.json",
+                data: {
+                    size: 1,
+                    apikey: "YOUR_API_KEY_HERE" // Replace with your actual API key
+                },
+                async: true,
+                dataType: "json",
+                success: function(json) {
+                    console.log(json);
+                    if (json._embedded && json._embedded.events) {
+                        var events = json._embedded.events;
+                        var csvContent = "data:text/csv;charset=utf-8,";
+
+                        // Add CSV headers
+                        csvContent += "Event Name,Event Date,Event ID\n";
+
+                        // Add CSV rows
+                        events.forEach(event => {
+                            var eventName = event.name;
+                            var eventDate = event.dates.start.localDate;
+                            var eventId = event.id;
+                            csvContent += `${eventName},${eventDate},${eventId}\n`;
+                        });
+
+                        // Create a downloadable link
+                        var encodedUri = encodeURI(csvContent);
+                        var link = document.createElement("a");
+                        link.setAttribute("href", encodedUri);
+                        link.setAttribute("download", "events.csv");
+                        document.body.appendChild(link);
+
+                        // Simulate a click to trigger download
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
+                        console.log("No events found.");
+                    }
+                },
+                error: function(xhr, status, err) {
+                    console.error("Error: " + status + " - " + err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
