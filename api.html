@@ -3,10 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch and Download CSV</title>
+    <title>Fetch and Display Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+        #data {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <button id="fetch-button">Fetch and Download CSV</button>
+    <button id="fetch-button">Fetch Event Data</button>
+    <p id="message"></p>
+    <div id="data"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -21,38 +45,28 @@
                 async: true,
                 dataType: "json",
                 success: function(json) {
-                    console.log(json);
                     if (json._embedded && json._embedded.events) {
                         var events = json._embedded.events;
-                        var csvContent = "data:text/csv;charset=utf-8,";
+                        var event = events[0]; // Get the first event
+                        var eventName = event.name;
+                        var eventDate = event.dates.start.localDate;
+                        var eventId = event.id;
 
-                        // Add CSV headers
-                        csvContent += "Event Name,Event Date,Event ID\n";
+                        // Display the data in the #data div
+                        document.getElementById("data").innerHTML = `
+                            <strong>Event Name:</strong> ${eventName} <br>
+                            <strong>Event Date:</strong> ${eventDate} <br>
+                            <strong>Event ID:</strong> ${eventId}
+                        `;
 
-                        // Add CSV rows
-                        events.forEach(event => {
-                            var eventName = event.name;
-                            var eventDate = event.dates.start.localDate;
-                            var eventId = event.id;
-                            csvContent += `${eventName},${eventDate},${eventId}\n`;
-                        });
-
-                        // Create a downloadable link
-                        var encodedUri = encodeURI(csvContent);
-                        var link = document.createElement("a");
-                        link.setAttribute("href", encodedUri);
-                        link.setAttribute("download", "events.csv");
-                        document.body.appendChild(link);
-
-                        // Simulate a click to trigger download
-                        link.click();
-                        document.body.removeChild(link);
+                        // Display a success message
+                        document.getElementById("message").textContent = "Data fetched successfully!";
                     } else {
-                        console.log("No events found.");
+                        document.getElementById("message").textContent = "No events found.";
                     }
                 },
                 error: function(xhr, status, err) {
-                    console.error("Error: " + status + " - " + err);
+                    document.getElementById("message").textContent = "Error fetching data: " + status + " - " + err;
                 }
             });
         });
