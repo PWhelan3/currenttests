@@ -10,17 +10,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 25px;
+            margin: 20px;
         }
         #message {
-            margin-top: 25px;
+            margin-top: 20px;
             font-size: 20px;
             color: green;
         }
         #data {
-            margin-top: 25px;
+            margin-top: 20px;
             border: 1px solid #ddd;
-            padding: 15px;
+            padding: 10px;
             width: 100%;
             max-width: 600px;
             height: 50vh; /* Set fixed height to 50% of the viewport height */
@@ -34,44 +34,8 @@
     <p id="message"></p>
     <div id="data"></div>
 
+    <!-- Link to the external JavaScript file -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        document.getElementById("fetch-button").addEventListener("click", function() {
-            $.ajax({
-                type: "GET",
-                url: "https://app.ticketmaster.com/discovery/v2/events.json",
-                data: {
-                    size: 1,
-                    apikey: "YOUR_API_KEY_HERE" // Replace with your actual API key
-                },
-                async: true,
-                dataType: "json",
-                success: function(json) {
-                    if (json._embedded && json._embedded.events) {
-                        var events = json._embedded.events;
-                        var event = events[0]; // Get the first event
-                        var eventName = event.name;
-                        var eventDate = event.dates.start.localDate;
-                        var eventId = event.id;
-
-                        // Display the data in the #data div
-                        document.getElementById("data").innerHTML = `
-                            <strong>Event Name:</strong> ${eventName} <br>
-                            <strong>Event Date:</strong> ${eventDate} <br>
-                            <strong>Event ID:</strong> ${eventId}
-                        `;
-
-                        // Display a success message
-                        document.getElementById("message").textContent = "Data fetched successfully!";
-                    } else {
-                        document.getElementById("message").textContent = "No events found.";
-                    }
-                },
-                error: function(xhr, status, err) {
-                    document.getElementById("message").textContent = "Error fetching data: " + status + " - " + err;
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
