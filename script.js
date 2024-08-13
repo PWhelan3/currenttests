@@ -65,3 +65,28 @@ function prevSlide() {
 
 // Auto slide
 setInterval(nextSlide, 4000);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+
+    function performSearch() {
+        const query = searchInput.value.trim();
+        if (query) {
+            alert(`Searching for: ${query}`);
+            // You can replace the alert with the actual search functionality,
+            // like redirecting to a search results page or filtering content dynamically.
+        } else {
+            alert('Please enter a search term');
+        }
+    }
+
+    searchButton.addEventListener('click', performSearch);
+
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+});
