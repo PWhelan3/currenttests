@@ -90,3 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+document.querySelector('.icon-button').addEventListener('click', function() {
+    alert('Button clicked!');
+});
