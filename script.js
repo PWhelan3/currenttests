@@ -95,3 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelector('.icon-button').addEventListener('click', function() {
     alert('Button clicked!');
 });
+
+
+
+
+const lines = [
+    "Dynamic text for the first line.",
+    "Another dynamic text for the second line.",
+    "Yet another dynamic text for the third line."
+];
+
+document.querySelectorAll('.scrolling-text').forEach((element, index) => {
+    element.textContent = lines[index];
+});
