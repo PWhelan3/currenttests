@@ -108,3 +108,26 @@ const lines = [
 document.querySelectorAll('.scrolling-text').forEach((element, index) => {
     element.textContent = lines[index];
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.tab-button');
+    const sections = document.querySelectorAll('.content-section');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove the 'active' class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Add the 'active' class to the clicked button
+            button.classList.add('active');
+
+            // Hide all content sections
+            sections.forEach(section => section.classList.remove('active'));
+            // Show the content section associated with the clicked button
+            const targetSection = document.getElementById(button.getAttribute('data-target'));
+            targetSection.classList.add('active');
+        });
+    });
+});
