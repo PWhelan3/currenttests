@@ -131,3 +131,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
+let slideIndex = 0;
+
+function showSlides(index) {
+    const slides = document.querySelectorAll('.carousel-item');
+    if (index >= slides.length) {
+        slideIndex = 0;
+    }
+    if (index < 0) {
+        slideIndex = slides.length - 1;
+    }
+    document.querySelector('.carousel-inner').style.transform = `translateX(-${slideIndex * 100}%)`;
+
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === slideIndex) {
+            slide.classList.add('active');
+        }
+    });
+}
+
+function moveSlide(n) {
+    showSlides(slideIndex += n);
+}
+
+// Initialize the carousel
+showSlides(slideIndex);
