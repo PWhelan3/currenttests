@@ -183,3 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
+window.addEventListener('scroll', function() {
+    const parallaxText = document.querySelector('.parallax-text');
+    const scrollPosition = window.pageYOffset;
+
+    // Adjust the speed by changing the division factor
+    parallaxText.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+});
