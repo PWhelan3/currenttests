@@ -193,3 +193,23 @@ window.addEventListener('scroll', function() {
     // Adjust the speed by changing the division factor
     parallaxText.style.transform = `translateY(${scrollPosition * 0.5}px)`;
 });
+
+
+
+
+function showProfile() {
+    document.getElementById('profile-page').style.display = 'block';
+    document.getElementById('settings-page').style.display = 'none';
+}
+
+function showSettings() {
+    document.getElementById('profile-page').style.display = 'none';
+    document.getElementById('settings-page').style.display = 'block';
+}
+
+function saveSettings() {
+    const profileVisibility = document.getElementById('profile-visibility').value;
+    const emailNotifications = document.getElementById('email-notifications').checked;
+
+    alert(`Settings saved:\nProfile Visibility: ${profileVisibility}\nEmail Notifications: ${emailNotifications ? 'On' : 'Off'}`);
+}
