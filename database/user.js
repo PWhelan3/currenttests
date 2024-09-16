@@ -20,3 +20,20 @@ UserSchema.pre('save', async function (next) {
 });
 
 module.exports = mongoose.model('User', UserSchema);
+
+
+
+// routes/users.js
+const express = require('express');
+const { registerUser, loginUser } = require('../controllers/userController');
+const router = express.Router();
+
+// @route    POST /api/users/register
+// @desc     Register user
+router.post('/register', registerUser);
+
+// @route    POST /api/users/login
+// @desc     Login user
+router.post('/login', loginUser);
+
+module.exports = router;
